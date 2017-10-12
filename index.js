@@ -20,7 +20,7 @@ const template = [
                 win.on('closed', () => {
                     win = null;
                     // 뷰의 데이터가 날아간다..
-                    // [질문] 방법 한가지가 뭐였지 
+                    // 저장할 것은 저장하도록..
                 });
             } else {
                 win.focus();
@@ -63,13 +63,10 @@ const template2 = [
                 click: () => {
                     console.log('clicked');
                     if (win === null) {
-                        // win 이 종료되면 에러발생 -> 처리 윈도우 종료 라이프사이클에서 win = null로 
                         win = new BrowserWindow();
                         win.loadURL('https://www.naver.com');
                         win.on('closed', () => {
                             win = null;
-                            // 뷰의 데이터가 날아간다..
-                            // [질문] 방법 한가지가 뭐였지 
                         });
                     } else {
                         win.focus();
@@ -164,24 +161,14 @@ app.on('ready', () => {
     console.log(process.type);
 
     const tray = new Tray(path.join(__dirname, 'tray.png'));
+    // tray 버튼 메뉴
     tray.setContextMenu(Menu.buildFromTemplate(template));
 
     tray.on('click', () => {
         console.log('tray click');
-        // win = new BrowserWindow();
-        // if (win === null) {
-        //     // win 이 종료되면 에러발생 -> 처리 윈도우 종료 라이프사이클에서 win = null로 
-        //     win = new BrowserWindow();
-        //     win.on('closed', () => {
-        //         win = null;
-        //         // 뷰의 데이터가 날아간다..
-        //         // [질문] 방법 한가지가 뭐였지 
-        //     });
-        // } else {
-        //     win.focus();
-        // }
     });
 
+    // app drop-down 메뉴
     Menu.setApplicationMenu(Menu.buildFromTemplate(template2));
 
 });
